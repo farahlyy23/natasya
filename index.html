@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iMuslim - Panduan Shalat Sesuai Sunnah</title>
+    <style>
+        /* ================= CSS STYLING ================= */
+        :root {
+            --primary-color: #5c4033; /* Coklat Tua Islami */
+            --secondary-color: #896752; /* Coklat Muda */
+            --accent-color: #c5a059; /* Emas Klasik */
+            --bg-color: #fcfaf7; /* Krem Ringan */
+            --text-color: #2b221a;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navigasi Utama */
+        header {
+            background-color: var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        /* Konten Utama */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            min-height: 70vh;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Layout Menu dengan Sidebar Navigasi */
+        .menu-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sidebar {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--accent-color);
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .sub-nav {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .sub-nav button {
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 0.7rem 1rem;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+        }
+
+        .sub-nav button:hover, .sub-nav button.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .content-area {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .sub-content {
+            display: none;
+        }
+
+        .sub-content.active {
+            display: block;
+        }
+
+        /* Gaya Teks Islami (Arab & Latin) */
+        h1, h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #4a423a;
+        }
+
+        .box-bacaan {
+            background-color: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .teks-arab {
+            font-size: 1.8rem;
+            text-align: right;
+            direction: rtl;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            line-height: 2.8rem;
+        }
+
+        .arti {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / NAVIGATION -->
+    <header>
+        <nav class="navbar">
+            <a onclick="bukaHalaman('beranda')" class="logo">iMuslim</a>
+            <ul class="nav-menu">
+                <li><a id="link-beranda" onclick="bukaHalaman('beranda')" class="active">Beranda</a></li>
+                <li><a id="link-artikel" onclick="bukaHalaman('artikel')">Artikel Muslim</a></li>
+                <li><a id="link-sifat-sholat" onclick="bukaHalaman('sifat-sholat')">Sifat Shalat Nabi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTENT SECTIONS -->
+    <main>
+        
+        <!-- Halaman Beranda -->
+        <section id="page-beranda" class="page active">
+            <div class="content-area" style="text-align: center; padding: 4rem 2rem;">
+                <h1>Selamat Datang di iMuslim</h1>
+                <p>Platform edukasi digital yang menyajikan artikel Islami pilihan serta panduan tata cara, bacaan, dan sifat shalat Nabi Muhammad ﷺ secara lengkap berdasarkan dalil-dalil yang shahih.</p>
+                <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+                    <button onclick="bukaHalaman('artikel')" style="background: var(--primary-color); color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Baca Artikel</button>
+                    <button onclick="bukaHalaman('sifat-sholat')" style="background: transparent; color: var(--primary-color); padding: 0.8rem 1.5rem; border: 2px solid var(--primary-color); border-radius: 4px; cursor: pointer; font-weight: 600;">Panduan Shalat</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman Artikel Muslim -->
+        <section id="page-artikel" class="page">
+            <div class="menu-container">
+                <aside class="sidebar">
+                    <h3>Artikel Muslim</h3>
+                    <ul class="sub-nav">
+                        <li><button id="btn-art1" onclick="bukaSubMenu('artikel', 'art1')" class="active">Pentingnya Ikhlas</button></li>
+                        <li><button id="btn-art2" onclick="bukaSubMenu('artikel', 'art2')">Keutamaan Wudhu</button></li>
+                        <li><button id="btn-art3" onclick="bukaSubMenu('artikel', 'art3')">Adab Berdoa</button></li>
+                    </ul>
+                </aside>
+                <div class="content-area">
+                    <div id="sub-artikel-art1" class="sub-content active">
+                        <h2>Pentingnya Mengikhlaskan Niat</h2>
+                        <p>Ikhlas adalah syarat mutlak diterimanya amal shaleh di sisi Allah SWT. Setiap muslim wajib membersihkan hatinya dari riya dan sum'ah agar ibadah yang dilakukan tidak sia-sia.</p>
+                    </div>
+                    <div id="sub-artikel-art2" class="sub-content">
+                        <h2>Keutamaan Menyempurnakan Wudhu</h2>
+                        <p>Wudhu bukan sekadar membasuh anggota badan, melainkan sarana penggugur dosa-dosa kecil. Menyempurnakan wudhu sesuai sunnah adalah kunci keabsahan shalat kita.</p>
+                    </div>
+                    <div id="sub-artikel-art3" class="sub-content">
+                        <h2>Adab-Adab Mengangkat Tangan Saat Berdoa</h2>
+                        <p>Di antara sebab dikabulkannya doa adalah memperhatikan adab, seperti menghadap kiblat, memuji Allah, membaca shalawat, serta merendahkan diri dengan penuh harap.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman Sifat Shalat Nabi -->
+        <section id="page-sifat-sholat" class="page">
+            <div class="menu-container">
+                <aside class="sidebar">
+                    <h3>Sifat Shalat Nabi</h3>
+                    <ul class="sub-nav">
+                        <li><button id="btn-cara" onclick="bukaSubMenu('sifat-sholat', 'cara')" class="active">Cara Shalat Nabi</button></li>
+                        <li><button id="btn-bacaan" onclick="bukaSubMenu('sifat-sholat', 'bacaan')">Bacaan Shalat Sunnah</button></li>
+                        <li><button id="btn-iftitah" onclick="bukaSubMenu('sifat-sholat', 'iftitah')">12 Macam Doa Iftitah</button></li>
+                        <li><button id="btn-dzikir" onclick="bukaSubMenu('sifat-sholat', 'dzikir')">Dzikir Setelah Shalat</button></li>
+                    </ul>
+                </aside>
+                <div class="content-area">
+                    
+                    <!-- Sub-Nav: Cara Shalat -->
+                    <div id="sub-sifat-sholat-cara" class="sub-content active">
+                        <h2>Tata Cara Shalat Nabi ﷺ</h2>
